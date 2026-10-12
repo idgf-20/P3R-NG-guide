@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Persona 3 Reload - NG+ 100% Master Tracker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            p3blue: {
+              DEFAULT: '#0055ff',
+              dark: '#0033aa',
+              light: '#3388ff',
+              glow: '#00d0ff'
+            },
+            darkbg: '#080d1a',
+            darkpanel: '#0e172a',
+            darkcard: '#131e38',
+            goldaccent: '#fbbf24'
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Cinzel', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Custom sleek scrollbar & P3 theme glows */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #080d1a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e3a8a;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #0055ff;
+    }
+    .p3-glow {
+      box-shadow: 0 0 25px -5px rgba(0, 85, 255, 0.45);
+    }
+    .badge-arcana {
+      background: linear-gradient(135deg, rgba(0,85,255,0.18), rgba(0,208,255,0.1));
+      border: 1px solid rgba(0, 208, 255, 0.3);
+    }
+    .gold-glow {
+      text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+    }
+  </style>
+</head>
+<body class="bg-[#070b14] text-slate-100 min-h-screen font-sans flex flex-col antialiased selection:bg-blue-600 selection:text-white">
+
+  <!-- Top Navigation Bar -->
+  <header class="sticky top-0 z-50 bg-[#0a1020]/95 backdrop-blur-md border-b border-blue-900/40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-700 via-blue-500 to-cyan-400 flex items-center justify-center font-display font-extrabold text-white text-lg shadow-lg shadow-blue-500/30">
+          P3
+        </div>
+        <div>
+          <h1 class="text-base sm:text-lg font-bold font-display tracking-wide text-white flex items-center gap-2">
+            P3R <span class="text-cyan-400 font-sans text-xs sm:text-sm font-semibold tracking-normal px-2 py-0.5 rounded-full bg-blue-950/80 border border-blue-700/50">NG+ 100% ROUTE</span>
+          </h1>
+        </div>
+      </div>
+
+      <!-- Quick Action Controls -->
+      <div class="flex items-center space-x-2 sm:space-x-3">
+        <!-- Progress Counter -->
+        <div class="hidden sm:flex flex-col text-right">
+          <span class="text-[11px] text-slate-400 uppercase tracking-wider">Schedule Progress</span>
+          <span id="progressText" class="text-xs font-semibold text-cyan-300">0 / 0 Done</span>
+        </div>
+        <div class="w-20 sm:w-28 bg-slate-800 rounded-full h-2.5 overflow-hidden border border-blue-900/60 hidden sm:block">
+          <div id="progressBar" class="bg-gradient-to-r from-blue-600 to-cyan-400 h-2.5 transition-all duration-300 rounded-full" style="width: 0%"></div>
+        </div>
+
+        <button id="resetBtn" title="Reset all checked items" class="px-2.5 py-1.5 text-xs rounded-lg border border-red-900/60 bg-red-950/30 text-red-300 hover:bg-red-900/50 transition flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+          <span class="hidden md:inline">Reset</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+    <!-- Hero Announcement / NG+ Reminders Banner -->
+    <div class="bg-gradient-to-r from-blue-950/70 via-slate-900 to-blue-950/40 border border-blue-800/40 rounded-2xl p-4 sm:p-5 relative overflow-hidden p3-glow">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 relative z-10">
+        <div class="space-y-1">
+          <div class="flex items-center gap-2">
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-emerald-950 border border-emerald-500/50 text-emerald-300">
+              NG+ Stats Carried Over
+            </span>
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-amber-950 border border-amber-500/50 text-amber-300">
+              Matching Persona (+1) Required
+            </span>
+          </div>
+          <h2 class="text-base sm:text-lg font-bold text-white">Full S.Link, Link Episode &amp; Tartarus Roadmap</h2>
+          <p class="text-xs sm:text-sm text-slate-300 max-w-3xl">
+            Academics, Charm, and Courage are already Rank 6. Every dialogue choice below gives optimal affinity points. School Links take priority over vacation-accessible links.
+          </p>
+        </div>
+        <!-- Quick Alert for 11/7 -->
+        <div class="flex-shrink-0 bg-blue-900/40 border border-cyan-500/30 rounded-xl p-3 text-xs text-cyan-200 flex items-start gap-2 max-w-xs">
+          <svg class="w-4 h-4 text-cyan-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+          <div>
+            <strong class="text-cyan-300">Missable Alert:</strong> Complete Shinjiro by Oct 4th and buy the White Flower for Junpei on Nov 7th!
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Month Selector Bar & Search Controls -->
+    <div class="bg-darkpanel border border-blue-900/50 rounded-2xl p-4 space-y-4 shadow-xl">
+      <!-- Month Navigation Pills -->
+      <div class="flex items-center gap-1.5 overflow-x-auto pb-1" id="monthTabs">
+        <!-- Dynamically rendered or pre-filled buttons -->
+        <button data-month="ALL" class="month-btn active px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-blue-600 text-white transition flex-shrink-0">All Months</button>
+        <button data-month="Apr" class="month-btn px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 transition flex-shrink-0">April</button>
+        <button data-month="May" class="month-btn px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 transition flex-shrink-0">May</button>
+        <button data-month="Jun" class="month-btn px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 transition flex-shrink-0">June</button>
+        <button data-month="Jul" class="month-btn px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 transition flex-shrink-0">July</button>
+        <button data-month="Aug" class="month-btn px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 transition flex-shrink-0">August</button>
+        <button data-month="Sep" class="month-btn px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 transition flex-shrink-0">September</button>
+        <button data-month="Oct" class="month-btn px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 transition flex-shrink-0">October</button>
+        <button data-month="Nov" class="month-btn px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 transition flex-shrink-0">November</button>
+        <button data-month="Dec" class="month-btn px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 transition flex-shrink-0">December</button>
+        <button data-month="Jan" class="month-btn px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 transition flex-shrink-0">January</button>
+      </div>
+
+      <!-- Filters & Live Search Inputs -->
+      <div class="flex flex-col md:flex-row gap-3 items-center justify-between pt-2 border-t border-slate-800">
+        <div class="relative w-full md:w-80">
+          <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-500">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+          </span>
+          <input type="text" id="searchInput" placeholder="Search link, date, or character (e.g., Mitsuru, 5/10, Tartarus)..." 
+                 class="w-full pl-9 pr-3 py-2 bg-slate-900 border border-slate-700/80 rounded-xl text-xs sm:text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition">
+        </div>
+
+        <!-- Filter Tags -->
+        <div class="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
+          <label class="text-xs text-slate-400 flex-shrink-0 font-medium">Filter:</label>
+          <button data-filter="all" class="filter-pill active px-2.5 py-1 text-xs rounded-md bg-blue-700 text-white transition flex-shrink-0">All</button>
+          <button data-filter="link" class="filter-pill px-2.5 py-1 text-xs rounded-md bg-slate-800 text-slate-300 hover:bg-slate-700 transition flex-shrink-0">S.Links</button>
+          <button data-filter="episode" class="filter-pill px-2.5 py-1 text-xs rounded-md bg-slate-800 text-slate-300 hover:bg-slate-700 transition flex-shrink-0">Link Episodes</button>
+          <button data-filter="tartarus" class="filter-pill px-2.5 py-1 text-xs rounded-md bg-slate-800 text-slate-300 hover:bg-slate-700 transition flex-shrink-0">Tartarus</button>
+          <button data-filter="pending" class="filter-pill px-2.5 py-1 text-xs rounded-md bg-slate-800 text-slate-300 hover:bg-slate-700 transition flex-shrink-0">Unchecked Only</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dialogue answers modal (hidden by default) -->
+    <div id="detailsModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
+      <div class="bg-darkpanel border border-blue-700 rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl relative">
+        <button id="closeModalBtn" class="absolute top-4 right-4 text-slate-400 hover:text-white transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+        <div id="modalHeader" class="space-y-1">
+          <span id="modalDate" class="text-xs font-bold text-cyan-400 uppercase tracking-widest"></span>
+          <h3 id="modalTitle" class="text-lg font-bold text-white font-display"></h3>
+        </div>
+        <div id="modalBody" class="bg-slate-900/90 rounded-xl p-4 border border-slate-800 text-sm space-y-2 text-slate-200 max-h-80 overflow-y-auto">
+          <!-- Populated by JS -->
+        </div>
+        <div class="flex justify-end pt-2">
+          <button id="modalOkBtn" class="px-4 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-xs font-semibold text-white transition">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Events Table View -->
+    <div class="bg-darkpanel border border-blue-900/40 rounded-2xl shadow-xl overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse text-xs sm:text-sm">
+          <thead>
+            <tr class="bg-[#0b1328] text-slate-400 text-[11px] sm:text-xs uppercase font-semibold border-b border-blue-900/50">
+              <th class="py-3 px-3 sm:px-4 w-12 text-center">Done</th>
+              <th class="py-3 px-3 sm:px-4 w-24">Date</th>
+              <th class="py-3 px-3 sm:px-4 w-24 sm:w-28">Slot</th>
+              <th class="py-3 px-3 sm:px-4">Activity &amp; Character</th>
+              <th class="py-3 px-3 sm:px-4 min-w-[280px]">Optimal Dialogue Choices &amp; Strategy</th>
+            </tr>
+          </thead>
+          <tbody id="scheduleTableBody" class="divide-y divide-slate-800/80">
+            <!-- Table rows generated by JavaScript -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Empty state container -->
+      <div id="emptyState" class="hidden py-12 text-center space-y-2">
+        <svg class="w-10 h-10 text-slate-600 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <p class="text-slate-400 font-medium">No schedule items match your current filter.</p>
+        <button id="clearFiltersBtn" class="text-xs text-cyan-400 hover:underline">Reset filters and search</button>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="bg-[#060a14] border-t border-blue-950 py-6 text-slate-500 text-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+      <p>Persona 3 Reload NG+ 100% Social Link Master Route. Progress automatically saved in your browser storage.</p>
+      <div class="flex gap-4">
+        <span class="hover:text-slate-300">Matching Arcana Always Required</span>
+        <span>•</span>
+        <span class="hover:text-slate-300">Merciless Carries Nothing</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Complete Day-by-Day dataset with verified best responses and types
+    const SCHEDULE_DATA = [
+      // APRIL
+      { id: '4-22-1', month: 'Apr', date: '4/22', time: 'After School', type: 'link', name: 'Magician 1 (Kenji)', desc: 'Automatic unlock in 2-F Classroom.' },
+      { id: '4-22-2', month: 'Apr', date: '4/22', time: 'Evening', type: 'other', name: 'Dorm / Mall', desc: 'Buy 1 Mad Bull drink from 2F dorm vending machine.' },
+      { id: '4-23-1', month: 'Apr', date: '4/23', time: 'After School', type: 'link', name: 'Chariot 1 (Kazushi)', desc: 'Join Track/Kendo team. (Any choices)' },
+      { id: '4-23-2', month: 'Apr', date: '4/23', time: 'Evening', type: 'other', name: 'Paulownia Mall', desc: 'Free time to buy gear and items.' },
+      { id: '4-24-1', month: 'Apr', date: '4/24', time: 'After School', type: 'other', name: 'Yuko Flag / Track', desc: 'Talk to Yuko outside gym: "Wanna walk home together?"' },
+      { id: '4-24-2', month: 'Apr', date: '4/24', time: 'Evening', type: 'tartarus', name: 'Tartarus (F1–22)', desc: 'Clear Thebel sector in 1 single night. Find 1 Odd Morsel in chest for Moon link.' },
+      { id: '4-25-1', month: 'Apr', date: '4/25', time: 'After School', type: 'other', name: 'Prep Tasks', desc: 'Buy Weird Takoyaki at Strip Mall. Inspect Persimmon Tree in school gym hallway.' },
+      { id: '4-25-2', month: 'Apr', date: '4/25', time: 'Evening', type: 'other', name: 'Arcade / Mall', desc: 'Free evening / Game Parade stat buffs.' },
+      { id: '4-26-1', month: 'Apr', date: '4/26', time: 'Daytime', type: 'other', name: 'Naganaki Shrine', desc: 'Talk to Maiko at playground: Hand over Weird Takoyaki & Mad Bull.' },
+      { id: '4-26-2', month: 'Apr', date: '4/26', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '4-27-1', month: 'Apr', date: '4/27', time: 'After School', type: 'link', name: 'Emperor 1 (Hidetoshi)', desc: 'Faculty Office -> Join Student Council. (Any choices)' },
+      { id: '4-27-2', month: 'Apr', date: '4/27', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '4-28-1', month: 'Apr', date: '4/28', time: 'After School', type: 'link', name: 'Magician 2', desc: '(1) "That\'s a secret." / (2) "I like them all!"' },
+      { id: '4-28-2', month: 'Apr', date: '4/28', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '4-29-1', month: 'Apr', date: '4/29', time: 'Daytime', type: 'link', name: 'Hermit 1 (Maya)', desc: 'Boot up Online Game on dorm room PC.' },
+      { id: '4-29-2', month: 'Apr', date: '4/29', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '4-30-1', month: 'Apr', date: '4/30', time: 'After School', type: 'link', name: 'Chariot 2', desc: '(1) "Toughen up!"' },
+      { id: '4-30-2', month: 'Apr', date: '4/30', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+
+      // MAY
+      { id: '5-01-1', month: 'May', date: '5/1', time: 'After School', type: 'link', name: 'Chihiro Flag & Chariot 3', desc: '2F Hallway: "I wanted to talk." -> Chariot: (1) "Are you skimping on practice?" / (2) "Don\'t push yourself."' },
+      { id: '5-01-2', month: 'May', date: '5/1', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '5-02-1', month: 'May', date: '5/2', time: 'After School', type: 'link', name: 'Hierophant 1 (Old Couple)', desc: 'Deliver Persimmon Leaf at Bookworms. (Any choices)' },
+      { id: '5-02-2', month: 'May', date: '5/2', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '5-03-1', month: 'May', date: '5/3', time: 'Daytime', type: 'link', name: 'Hermit 2', desc: '(1) "Of course." / (2) "Sunshine is overrated."' },
+      { id: '5-03-2', month: 'May', date: '5/3', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '5-04-1', month: 'May', date: '5/4', time: 'Daytime', type: 'link', name: 'Hierophant 2', desc: '(1) "Tell him your name." / (2) "Thank you."' },
+      { id: '5-04-2', month: 'May', date: '5/4', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '5-05-1', month: 'May', date: '5/5', time: 'Daytime', type: 'link', name: 'Hierophant 3', desc: '(1) "Looking for something?" / (2) "Can I help?"' },
+      { id: '5-05-2', month: 'May', date: '5/5', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '5-06-1', month: 'May', date: '5/6', time: 'After School', type: 'link', name: 'Chihiro Flag & Strength 1', desc: '2F Hallway: "I\'m a guy." -> Talk to Yuko outside 2-F classroom to unlock Strength.' },
+      { id: '5-06-2', month: 'May', date: '5/6', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '5-07-1', month: 'May', date: '5/7', time: 'After School', type: 'link', name: 'Chihiro Flag & Magician 3', desc: '2F Hallway: "Hello" -> Ask to walk home -> Kenji: (1) "What, of life?" / (2) "Go for it."' },
+      { id: '5-07-2', month: 'May', date: '5/7', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '5-08-1', month: 'May', date: '5/8', time: 'After School', type: 'link', name: 'Justice 1 (Chihiro)', desc: 'Outside Student Council Room. (Any choices)' },
+      { id: '5-08-2', month: 'May', date: '5/8', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '5-09-1', month: 'May', date: '5/9', time: 'Full Moon', type: 'other', name: 'Priestess Full Moon Boss', desc: 'Story battle on runaway train.' },
+      { id: '5-10-1', month: 'May', date: '5/10', time: 'Daytime', type: 'link', name: 'Hermit 3', desc: '(1) "Oh really?" / (2) "You don\'t like your job?"' },
+      { id: '5-10-2', month: 'May', date: '5/10', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '5-11-1', month: 'May', date: '5/11', time: 'After School', type: 'link', name: 'Hanged Man 1 (Maiko)', desc: 'Naganaki Shrine playground. (Any choices)' },
+      { id: '5-11-2', month: 'May', date: '5/11', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '5-12-1', month: 'May', date: '5/12', time: 'After School', type: 'episode', name: 'Junpei Link Episode 1', desc: 'Hang out with Junpei at dorm/station. (Mandatory for 100%)' },
+      { id: '5-12-2', month: 'May', date: '5/12', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '5-13-1', month: 'May', date: '5/13', time: 'After School', type: 'link', name: 'Chariot 4', desc: '(1) "That really sucks."' },
+      { id: '5-13-2', month: 'May', date: '5/13', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '5-14-1', month: 'May', date: '5/14', time: 'After School', type: 'link', name: 'Strength 2', desc: '(1) "What happened?" / (2) "It wasn\'t your fault." / (3) "That\'s true."' },
+      { id: '5-14-2', month: 'May', date: '5/14', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '5-15-1', month: 'May', date: '5/15', time: 'After School', type: 'link', name: 'Temperance 1 (Bebe)', desc: 'Home Economics Room (1F). (Any choices)' },
+      { id: '5-15-2', month: 'May', date: '5/15', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '5-16-1', month: 'May', date: '5/16', time: 'After School', type: 'link', name: 'Justice 2', desc: '(1) "Don\'t worry about it." / (2) "I read manga." / (3) "I\'m having fun."' },
+      { id: '5-16-2', month: 'May', date: '5/16', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '5-17-1', month: 'May', date: '5/17', time: 'Daytime', type: 'link', name: 'Hermit 4', desc: '(1) "Let\'s plan our wedding!"' },
+      { id: '5-17-2', month: 'May', date: '5/17', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '5-18-1', month: 'May', date: '5/18–22', time: 'All Day', type: 'other', name: 'First Semester Midterms', desc: 'Answers: Pantograph | Pendulum | Electricity | Jomon. Top of class!' },
+      { id: '5-23-1', month: 'May', date: '5/23', time: 'After School', type: 'link', name: 'Mitsuru Reward & Emperor 2', desc: '1F Faculty hall: Get exam reward from Mitsuru -> Emperor: (1) "It\'s a waste of time."' },
+      { id: '5-23-2', month: 'May', date: '5/23', time: 'Evening', type: 'other', name: 'Devil & Tower Unlock', desc: 'Give Tanaka ¥20k at Mall. Talk to Monk in Club Escapade (order drinks at bar).' },
+      { id: '5-24-1', month: 'May', date: '5/24', time: 'Daytime', type: 'link', name: 'Hermit 5', desc: '(1) "Who\'s Mr. E?" / (2) "Are you a teacher?"' },
+      { id: '5-24-2', month: 'May', date: '5/24', time: 'Evening', type: 'link', name: 'Tower 1 (Mutatsu)', desc: 'Talk to Monk in Club Escapade after ordering drink. (Any choices)' },
+      { id: '5-25-1', month: 'May', date: '5/25', time: 'After School', type: 'episode', name: 'Akihiko Link Episode 1', desc: 'Spend afternoon with Akihiko at station/dorm. (Mandatory)' },
+      { id: '5-25-2', month: 'May', date: '5/25', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '5-26-1', month: 'May', date: '5/26', time: 'After School', type: 'link', name: 'Magician 4', desc: '(1) (Any) / (2) "Good luck!"' },
+      { id: '5-26-2', month: 'May', date: '5/26', time: 'Evening', type: 'link', name: 'Devil 1 (Tanaka)', desc: 'Mall: Hand over ¥20k again to initiate Devil link.' },
+      { id: '5-27-1', month: 'May', date: '5/27', time: 'After School', type: 'link', name: 'Chariot 5', desc: '(1) "The hospital?" / (2) "I\'ll go with you."' },
+      { id: '5-27-2', month: 'May', date: '5/27', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '5-28-1', month: 'May', date: '5/28', time: 'After School', type: 'link', name: 'Justice 3', desc: '(1) "They have no shame." / (2) "I agree."' },
+      { id: '5-28-2', month: 'May', date: '5/28', time: 'Evening', type: 'link', name: 'Tower 2', desc: '(1) "None of your business." / (2) "How should I address you?"' },
+      { id: '5-29-1', month: 'May', date: '5/29', time: 'After School', type: 'link', name: 'Temperance 2', desc: '(1) "Japan rocks." / (2) "I\'ll help you."' },
+      { id: '5-29-2', month: 'May', date: '5/29', time: 'Evening', type: 'link', name: 'Tower 3', desc: '(1) "Can\'t you just ignore them?"' },
+      { id: '5-30-1', month: 'May', date: '5/30', time: 'After School', type: 'link', name: 'Hierophant 4', desc: '(1) "Now you\'ve got me worried."' },
+      { id: '5-30-2', month: 'May', date: '5/30', time: 'Evening', type: 'tartarus', name: 'Tartarus (F23–43)', desc: 'Clear Arqa block 1 in 1 night.' },
+      { id: '5-31-1', month: 'May', date: '5/31', time: 'Daytime', type: 'link', name: 'Hermit 6', desc: '(1) "Why don\'t you see him?"' },
+      { id: '5-31-2', month: 'May', date: '5/31', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+
+      // JUNE
+      { id: '6-01-1', month: 'Jun', date: '6/1', time: 'After School', type: 'link', name: 'Emperor 3', desc: '(1) (Any) / (2) "Stay strong."' },
+      { id: '6-01-2', month: 'Jun', date: '6/1', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '6-02-1', month: 'Jun', date: '6/2', time: 'After School', type: 'link', name: 'Magician 5', desc: '(1) "I agree."' },
+      { id: '6-02-2', month: 'Jun', date: '6/2', time: 'Evening', type: 'link', name: 'Devil 2', desc: '(Any choices - Tanaka always ranks up)' },
+      { id: '6-03-1', month: 'Jun', date: '6/3', time: 'After School', type: 'link', name: 'Chariot 6', desc: '(1) "Show some guts, man!" / (2) "Why go so far?" / (3) "What about your knee?"' },
+      { id: '6-03-2', month: 'Jun', date: '6/3', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '6-04-1', month: 'Jun', date: '6/4', time: 'After School', type: 'link', name: 'Justice 4', desc: '(1) "It\'s all right." / (2) "Hold her hand."' },
+      { id: '6-04-2', month: 'Jun', date: '6/4', time: 'Evening', type: 'link', name: 'Tower 4', desc: '(1) "Yeah, that\'s true."' },
+      { id: '6-05-1', month: 'Jun', date: '6/5', time: 'After School', type: 'link', name: 'Magician 6', desc: '(1) (Any) / (2) "I have 30-year goals."' },
+      { id: '6-05-2', month: 'Jun', date: '6/5', time: 'Evening', type: 'link', name: 'Tower 5', desc: '(1) "Dad?" / (2) "None of your business."' },
+      { id: '6-06-1', month: 'Jun', date: '6/6', time: 'After School', type: 'link', name: 'Strength 3', desc: '(1) "Don\'t worry about it." / (2) "I\'m honored."' },
+      { id: '6-06-2', month: 'Jun', date: '6/6', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '6-07-1', month: 'Jun', date: '6/7', time: 'Daytime', type: 'link', name: 'Hermit 7', desc: '(1) "A couple?"' },
+      { id: '6-07-2', month: 'Jun', date: '6/7', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '6-08-1', month: 'Jun', date: '6/8', time: 'Full Moon', type: 'other', name: 'Empress & Emperor Boss', desc: 'Full moon operations story battle.' },
+      { id: '6-09-1', month: 'Jun', date: '6/9', time: 'After School', type: 'link', name: 'Fortune 1 (Keisuke)', desc: 'Join Art Club in 1F Club Hallway. (Any choices)' },
+      { id: '6-09-2', month: 'Jun', date: '6/9', time: 'Evening', type: 'link', name: 'Devil 3', desc: '(Any choices - Tanaka always ranks up)' },
+      { id: '6-10-1', month: 'Jun', date: '6/10', time: 'After School', type: 'link', name: 'Strength 4', desc: '(1) "I don\'t mind." / (2) "He\'s a reliable guy."' },
+      { id: '6-10-2', month: 'Jun', date: '6/10', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '6-11-1', month: 'Jun', date: '6/11', time: 'After School', type: 'link', name: 'Justice 5', desc: '(1) "I\'m all ears." / (2) "Yeah, she\'s in love." / (3) "Happy to help." / (4) "Hold her hand."' },
+      { id: '6-11-2', month: 'Jun', date: '6/11', time: 'Evening', type: 'link', name: 'Tower 6', desc: '(1) "You have friends?"' },
+      { id: '6-12-1', month: 'Jun', date: '6/12', time: 'After School', type: 'link', name: 'Temperance 3', desc: '(1) "Sure, let\'s go." / (2) "I totally agree."' },
+      { id: '6-12-2', month: 'Jun', date: '6/12', time: 'Evening', type: 'link', name: 'Tower 7', desc: '(1) "Probably not."' },
+      { id: '6-13-1', month: 'Jun', date: '6/13', time: 'After School', type: 'link', name: 'Chariot 7', desc: '(1) "How\'s your knee?" / (2) "You have to get tougher!"' },
+      { id: '6-13-2', month: 'Jun', date: '6/13', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '6-14-1', month: 'Jun', date: '6/14', time: 'Daytime', type: 'link', name: 'Hermit 8', desc: '(1) "Hurry up and tell me." / (2) "What is he like?"' },
+      { id: '6-14-2', month: 'Jun', date: '6/14', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '6-15-1', month: 'Jun', date: '6/15', time: 'After School', type: 'link', name: 'Emperor 4', desc: '(1) "The school is cleaner."' },
+      { id: '6-15-2', month: 'Jun', date: '6/15', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '6-16-1', month: 'Jun', date: '6/16', time: 'After School', type: 'link', name: 'Magician 7', desc: '(1) "Ask what\'s wrong." / (2) "Bride-To-Be Magazine." / (3) "That\'s great. Congrats!"' },
+      { id: '6-16-2', month: 'Jun', date: '6/16', time: 'Evening', type: 'link', name: 'Devil 4', desc: '(Any choices)' },
+      { id: '6-17-1', month: 'Jun', date: '6/17', time: 'After School', type: 'link', name: 'Fortune 2', desc: '(1) "It\'s fine." / (2) "You have talent."' },
+      { id: '6-17-2', month: 'Jun', date: '6/17', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '6-18-1', month: 'Jun', date: '6/18', time: 'After School', type: 'link', name: 'Priestess 1 (Fuuka)', desc: 'Outside 2-F classroom (Courage 6 already met in NG+). (Any choices)' },
+      { id: '6-18-2', month: 'Jun', date: '6/18', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '6-19-1', month: 'Jun', date: '6/19', time: 'After School', type: 'link', name: 'Priestess 2', desc: '(1) "Sure." / (2) (Any)' },
+      { id: '6-19-2', month: 'Jun', date: '6/19', time: 'Evening', type: 'link', name: 'Tower 8', desc: '(1) "Dad?" / (2) "I was with a friend."' },
+      { id: '6-20-1', month: 'Jun', date: '6/20', time: 'After School', type: 'link', name: 'Justice 6', desc: '(1) "Is it good?" / (2) "What\'s wrong?"' },
+      { id: '6-20-2', month: 'Jun', date: '6/20', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '6-21-1', month: 'Jun', date: '6/21', time: 'Daytime', type: 'link', name: 'Hermit 9', desc: '(1) "Are you talking about me?"' },
+      { id: '6-21-2', month: 'Jun', date: '6/21', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '6-22-1', month: 'Jun', date: '6/22', time: 'After School', type: 'link', name: 'Priestess 3', desc: '(1) "Just a dash or two." / (2) "Just take it slow."' },
+      { id: '6-22-2', month: 'Jun', date: '6/22', time: 'Evening', type: 'link', name: 'Devil 5', desc: '(Any choices)' },
+      { id: '6-23-1', month: 'Jun', date: '6/23', time: 'After School', type: 'link', name: 'Fortune 3', desc: '(1) "Great job."' },
+      { id: '6-23-2', month: 'Jun', date: '6/23', time: 'Evening', type: 'link', name: 'Tower 9', desc: '(1) "Why not take a break?" / (2) "Hang in there."' },
+      { id: '6-24-1', month: 'Jun', date: '6/24', time: 'After School', type: 'link', name: 'Strength 5', desc: '(1) "It\'s because you teach so well." / (2) "I trust whatever you decide, Yuko."' },
+      { id: '6-24-2', month: 'Jun', date: '6/24', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '6-25-1', month: 'Jun', date: '6/25', time: 'After School', type: 'link', name: 'Justice 7', desc: '(1) (Any) / (2) "Yeah, she\'s in love."' },
+      { id: '6-25-2', month: 'Jun', date: '6/25', time: 'Evening', type: 'link', name: 'Tower 10 [MAX]', desc: '(Any choices) — Mutatsu Maxed!' },
+      { id: '6-26-1', month: 'Jun', date: '6/26', time: 'After School', type: 'link', name: 'Temperance 4', desc: '(1) "I\'m fine." / (2) "Japan is great."' },
+      { id: '6-26-2', month: 'Jun', date: '6/26', time: 'Evening', type: 'tartarus', name: 'Tartarus (F44–69)', desc: 'Clear Arqa block 2 & rescue all missing civilians.' },
+      { id: '6-27-1', month: 'Jun', date: '6/27', time: 'After School', type: 'link', name: 'Chariot 8', desc: '(1) "Look at yourself." / (2) "You\'re a teammate."' },
+      { id: '6-27-2', month: 'Jun', date: '6/27', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '6-28-1', month: 'Jun', date: '6/28', time: 'Daytime', type: 'link', name: 'Hermit 10 [MAX]', desc: '(1) "Oh, no worries." / (2) "I\'ll miss you." — Maya Maxed!' },
+      { id: '6-28-2', month: 'Jun', date: '6/28', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '6-29-1', month: 'Jun', date: '6/29', time: 'After School', type: 'link', name: 'Priestess 4', desc: '(1) (Any) / (2) "Let\'s do it together."' },
+      { id: '6-29-2', month: 'Jun', date: '6/29', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '6-30-1', month: 'Jun', date: '6/30', time: 'After School', type: 'link', name: 'Fortune 4', desc: '(1) "You\'re pulling out of the contest?" / (2) "Complaining to me won\'t help you."' },
+      { id: '6-30-2', month: 'Jun', date: '6/30', time: 'Evening', type: 'link', name: 'Devil 6', desc: '(Any choices)' },
+
+      // JULY
+      { id: '7-01-1', month: 'Jul', date: '7/1', time: 'After School', type: 'link', name: 'Emperor 5', desc: '(1) "They\'re being awful."' },
+      { id: '7-01-2', month: 'Jul', date: '7/1', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '7-02-1', month: 'Jul', date: '7/2', time: 'After School', type: 'link', name: 'Justice 8', desc: '(1) "Hold hands." (DO NOT kiss her yet to preserve flags)' },
+      { id: '7-02-2', month: 'Jul', date: '7/2', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '7-03-1', month: 'Jul', date: '7/3', time: 'After School', type: 'link', name: 'Magician 8', desc: '(1) "Are you in trouble?" / (2) "You should talk to her."' },
+      { id: '7-03-2', month: 'Jul', date: '7/3', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '7-04-1', month: 'Jul', date: '7/4', time: 'After School', type: 'link', name: 'Justice 9', desc: '(1) "Chihiro is innocent." / (2) "I feel the same." (Romance)' },
+      { id: '7-04-2', month: 'Jul', date: '7/4', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '7-05-1', month: 'Jul', date: '7/5', time: 'Daytime', type: 'link', name: 'Hanged Man 2', desc: '(1) "Sure, let\'s play."' },
+      { id: '7-05-2', month: 'Jul', date: '7/5', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '7-06-1', month: 'Jul', date: '7/6', time: 'After School', type: 'link', name: 'Chariot 9', desc: '(1) "Stay strong."' },
+      { id: '7-06-2', month: 'Jul', date: '7/6', time: 'Evening', type: 'link', name: 'Devil 7', desc: '(Any choices)' },
+      { id: '7-07-1', month: 'Jul', date: '7/7', time: 'Full Moon', type: 'other', name: 'Hierophant & Lovers Boss', desc: 'Full Moon operation battle at hotel.' },
+      { id: '7-08-1', month: 'Jul', date: '7/8', time: 'After School', type: 'link', name: 'Moon 1 (Nozomi)', desc: 'Quiz: "Pheromone Coffee", "Red", "Hagakure Bowl" -> Give Odd Morsel.' },
+      { id: '7-08-2', month: 'Jul', date: '7/8', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '7-09-1', month: 'Jul', date: '7/9', time: 'After School', type: 'link', name: 'Justice 10 [MAX]', desc: '(Any choices) — Chihiro Maxed!' },
+      { id: '7-09-2', month: 'Jul', date: '7/9', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '7-10-1', month: 'Jul', date: '7/10', time: 'After School', type: 'link', name: 'Temperance 5', desc: '(1) "Sure." / (2) "You\'ll be fine."' },
+      { id: '7-10-2', month: 'Jul', date: '7/10', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '7-11-1', month: 'Jul', date: '7/11', time: 'After School', type: 'link', name: 'Strength 6', desc: '(1) "You guys got this." / (2) "As long as we believe in them."' },
+      { id: '7-11-2', month: 'Jul', date: '7/11', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '7-12-1', month: 'Jul', date: '7/12', time: 'Daytime', type: 'other', name: 'Akinari Prep', desc: 'Shrine: Talk to Akinari (Needs pen). Talk to Koromaru at dorm at night to fetch it.' },
+      { id: '7-12-2', month: 'Jul', date: '7/12', time: 'Evening', type: 'link', name: 'Devil 8', desc: '(Any choices)' },
+      { id: '7-13-1', month: 'Jul', date: '7/13', time: 'After School', type: 'link', name: 'Chariot 10 [MAX]', desc: '(Any choices) — Kazushi Maxed!' },
+      { id: '7-13-2', month: 'Jul', date: '7/13', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '7-14-1', month: 'Jul', date: '7/14–18', time: 'All Day', type: 'other', name: 'Finals Week', desc: 'Answers: Dowsing | Error | Samurai | Cabaret. Top in Class!' },
+      { id: '7-19-1', month: 'Jul', date: '7/19', time: 'Daytime', type: 'link', name: 'Sun 1 (Akinari)', desc: 'Naganaki Shrine: Give Fountain Pen to start Sun link. (Any choices)' },
+      { id: '7-19-2', month: 'Jul', date: '7/19', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '7-20-1', month: 'Jul', date: '7/20–23', time: 'All Day', type: 'other', name: 'Yakushima Vacation', desc: 'Story trip: Aigis awakening.' },
+      { id: '7-24-1', month: 'Jul', date: '7/24', time: 'After School', type: 'link', name: 'Exam Reward & Lovers 1', desc: 'Faculty hall: Exam reward from Mitsuru -> Yukari in 2-F (Charm 6 already met). (Any)' },
+      { id: '7-24-2', month: 'Jul', date: '7/24', time: 'Evening', type: 'link', name: 'Devil 9', desc: '(Any choices)' },
+      { id: '7-25-1', month: 'Jul', date: '7/25', time: 'After School', type: 'link', name: 'Priestess 5', desc: '(1) "You did a great job." / (2) "I\'m glad I could help." / (3) "Can you make more sometime?"' },
+      { id: '7-25-2', month: 'Jul', date: '7/25', time: 'Evening', type: 'tartarus', name: 'Tartarus (F70–92)', desc: 'Clear Yabbashah block 1 in 1 night.' },
+      { id: '7-26-1', month: 'Jul', date: '7/26', time: 'Daytime', type: 'link', name: 'Sun 2', desc: '(1) "It\'s not meaningless." (Akinari ranks up automatically every Sunday)' },
+      { id: '7-26-2', month: 'Jul', date: '7/26', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '7-27-1', month: 'Jul', date: '7/27', time: 'After School', type: 'other', name: 'Athletic Meet Prep', desc: 'Mandatory sports meet story event.' },
+      { id: '7-27-2', month: 'Jul', date: '7/27', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '7-28-1', month: 'Jul', date: '7/28', time: 'After School', type: 'link', name: 'Temperance 6', desc: '(1) "Why not take a break?" / (2) "Let\'s do it." / (3) "I have your back!"' },
+      { id: '7-28-2', month: 'Jul', date: '7/28', time: 'Evening', type: 'link', name: 'Devil 10 [MAX]', desc: '(Any choices) — Tanaka Maxed!' },
+      { id: '7-29-1', month: 'Jul', date: '7/29', time: 'After School', type: 'link', name: 'Lovers 2', desc: '(1) "Pink." / (2) "That\'s mean."' },
+      { id: '7-29-2', month: 'Jul', date: '7/29', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '7-30-1', month: 'Jul', date: '7/30', time: 'After School', type: 'link', name: 'Priestess 6', desc: '(1) (Any) / (2) "If it\'s okay with you."' },
+      { id: '7-30-2', month: 'Jul', date: '7/30', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '7-31-1', month: 'Jul', date: '7/31', time: 'After School', type: 'link', name: 'Fortune 5', desc: '(1) "You shouldn\'t give up."' },
+      { id: '7-31-2', month: 'Jul', date: '7/31', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+
+      // AUGUST
+      { id: '8-01-1', month: 'Aug', date: '8/1', time: 'Daytime', type: 'link', name: 'Hierophant 5', desc: '(1) "Cheer up." / (2) "It\'s a nice memory."' },
+      { id: '8-01-2', month: 'Aug', date: '8/1', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '8-02-1', month: 'Aug', date: '8/2', time: 'Daytime', type: 'link', name: 'Sun 3', desc: '(1) "I don\'t think so."' },
+      { id: '8-02-2', month: 'Aug', date: '8/2', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '8-03-1', month: 'Aug', date: '8/3', time: 'Daytime', type: 'link', name: 'Hanged Man 3', desc: '(1) "How come?" / (2) "Don\'t run away."' },
+      { id: '8-03-2', month: 'Aug', date: '8/3', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '8-04-1', month: 'Aug', date: '8/4', time: 'Daytime', type: 'link', name: 'Hierophant 6', desc: '(1) "Letter?" / (2) "You\'re not alone."' },
+      { id: '8-04-2', month: 'Aug', date: '8/4', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '8-05-1', month: 'Aug', date: '8/5', time: 'Daytime', type: 'link', name: 'Hanged Man 4', desc: '(1) "I\'m sure they love you."' },
+      { id: '8-05-2', month: 'Aug', date: '8/5', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '8-06-1', month: 'Aug', date: '8/6', time: 'Full Moon', type: 'other', name: 'Chariot & Justice Boss', desc: 'Underground bunker story operation.' },
+      { id: '8-07-1', month: 'Aug', date: '8/7', time: 'Daytime', type: 'link', name: 'Hierophant 7', desc: '(1) "That\'s great."' },
+      { id: '8-07-2', month: 'Aug', date: '8/7', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '8-08-1', month: 'Aug', date: '8/8', time: 'Daytime', type: 'link', name: 'Hanged Man 5', desc: '(1) "Hamburgers." / (2) "You\'re a good girl." / (3) "Your dad."' },
+      { id: '8-08-2', month: 'Aug', date: '8/8', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '8-09-1', month: 'Aug', date: '8/9', time: 'Daytime', type: 'link', name: 'Star 1 (Mamoru)', desc: 'Strip Mall: Talk to Mamoru to initiate Star. (Any choices)' },
+      { id: '8-09-2', month: 'Aug', date: '8/9', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '8-10-1', month: 'Aug', date: '8/10–15', time: 'All Day', type: 'other', name: 'Summer School', desc: 'Automatic daytime story events. Free evenings.' },
+      { id: '8-16-1', month: 'Aug', date: '8/16', time: 'Daytime', type: 'other', name: 'Summer Festival', desc: 'Attend shrine festival with female partner.' },
+      { id: '8-17-1', month: 'Aug', date: '8/17', time: 'Daytime', type: 'link', name: 'Star 2', desc: '(1) "Sounds like a lot of pressure." / (2) "Myself."' },
+      { id: '8-17-2', month: 'Aug', date: '8/17', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '8-18-1', month: 'Aug', date: '8/18', time: 'Daytime', type: 'link', name: 'Moon 2', desc: '(1) "Slow down and savour it."' },
+      { id: '8-18-2', month: 'Aug', date: '8/18', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '8-19-1', month: 'Aug', date: '8/19', time: 'Daytime', type: 'link', name: 'Hanged Man 6', desc: '(1) "Calm down." / (2) "That should be enough."' },
+      { id: '8-19-2', month: 'Aug', date: '8/19', time: 'Evening', type: 'tartarus', name: 'Tartarus (F93–118)', desc: 'Clear Yabbashah block 2 & rescue civilians.' },
+      { id: '8-20-1', month: 'Aug', date: '8/20', time: 'Daytime', type: 'link', name: 'Hierophant 8', desc: '(1) "I\'ll help you search."' },
+      { id: '8-20-2', month: 'Aug', date: '8/20', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '8-21-1', month: 'Aug', date: '8/21', time: 'Daytime', type: 'link', name: 'Hierophant 9', desc: '(1) "Take care of yourself."' },
+      { id: '8-21-2', month: 'Aug', date: '8/21', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '8-22-1', month: 'Aug', date: '8/22', time: 'Daytime', type: 'episode', name: 'Koromaru Link Episode 1', desc: 'Walk/interact with Koromaru at the dorm. (Mandatory)' },
+      { id: '8-22-2', month: 'Aug', date: '8/22', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '8-23-1', month: 'Aug', date: '8/23', time: 'Daytime', type: 'link', name: 'Sun 4', desc: '(1) "Yeah, that\'s true."' },
+      { id: '8-23-2', month: 'Aug', date: '8/23', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '8-24-1', month: 'Aug', date: '8/24', time: 'Daytime', type: 'link', name: 'Hierophant 10 [MAX]', desc: '(Any choices) — Bunkichi & Mitsuko Maxed!' },
+      { id: '8-24-2', month: 'Aug', date: '8/24', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '8-25-1', month: 'Aug', date: '8/25', time: 'Daytime', type: 'link', name: 'Hanged Man 7', desc: '(1) "That\'s wonderful."' },
+      { id: '8-25-2', month: 'Aug', date: '8/25', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '8-26-1', month: 'Aug', date: '8/26', time: 'Daytime', type: 'link', name: 'Moon 3', desc: '(1) "That would be amazing!"' },
+      { id: '8-26-2', month: 'Aug', date: '8/26', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '8-27-1', month: 'Aug', date: '8/27', time: 'Daytime', type: 'link', name: 'Star 3', desc: '(1) "You\'ll beat him next time."' },
+      { id: '8-27-2', month: 'Aug', date: '8/27', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '8-28-1', month: 'Aug', date: '8/28', time: 'Daytime', type: 'episode', name: 'Junpei Link Episode 2', desc: 'Hang out with Junpei at mall/dorm. (Mandatory)' },
+      { id: '8-28-2', month: 'Aug', date: '8/28', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '8-29-1', month: 'Aug', date: '8/29', time: 'Daytime', type: 'episode', name: 'Akihiko Link Episode 2', desc: 'Spend afternoon with Akihiko. (Mandatory)' },
+      { id: '8-29-2', month: 'Aug', date: '8/29', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '8-30-1', month: 'Aug', date: '8/30', time: 'Daytime', type: 'link', name: 'Sun 5', desc: '(1) "It sounds lovely."' },
+      { id: '8-30-2', month: 'Aug', date: '8/30', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '8-31-1', month: 'Aug', date: '8/31', time: 'Daytime', type: 'link', name: 'Hanged Man 8', desc: '(1) "Hamburgers." / (2) "You\'re a good girl."' },
+      { id: '8-31-2', month: 'Aug', date: '8/31', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+
+      // SEPTEMBER
+      { id: '9-01-1', month: 'Sep', date: '9/1', time: 'After School', type: 'link', name: 'Emperor 6', desc: '(1) "Don\'t let it get to you."' },
+      { id: '9-01-2', month: 'Sep', date: '9/1', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '9-02-1', month: 'Sep', date: '9/2', time: 'After School', type: 'link', name: 'Priestess 7', desc: '(1) (Any) / (2) "It\'s great."' },
+      { id: '9-02-2', month: 'Sep', date: '9/2', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '9-03-1', month: 'Sep', date: '9/3', time: 'After School', type: 'link', name: 'Fortune 6', desc: '(1) "You can\'t give up."' },
+      { id: '9-03-2', month: 'Sep', date: '9/3', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '9-04-1', month: 'Sep', date: '9/4', time: 'Daytime', type: 'episode', name: 'Koromaru Link Episode 2', desc: 'Spend afternoon with Koromaru. (Mandatory)' },
+      { id: '9-04-2', month: 'Sep', date: '9/4', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '9-05-1', month: 'Sep', date: '9/5', time: 'Full Moon', type: 'other', name: 'Hermit Boss', desc: 'Club Escapade story battle.' },
+      { id: '9-06-1', month: 'Sep', date: '9/6', time: 'Daytime', type: 'link', name: 'Sun 6', desc: '(1) "I\'m sure he did."' },
+      { id: '9-06-2', month: 'Sep', date: '9/6', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '9-07-1', month: 'Sep', date: '9/7', time: 'After School', type: 'link', name: 'Lovers 3', desc: '(1) (Any) / (2) "I\'d protect you."' },
+      { id: '9-07-2', month: 'Sep', date: '9/7', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '9-08-1', month: 'Sep', date: '9/8', time: 'After School', type: 'episode', name: 'Shinjiro Link Episode 1', desc: 'Dorm 1F Lounge: Hang out with Shinjiro. (High Priority Deadline: Oct 4th)' },
+      { id: '9-08-2', month: 'Sep', date: '9/8', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '9-09-1', month: 'Sep', date: '9/9', time: 'After School', type: 'episode', name: 'Shinjiro Link Episode 2', desc: 'Spend time with Shinjiro.' },
+      { id: '9-09-2', month: 'Sep', date: '9/9', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '9-10-1', month: 'Sep', date: '9/10', time: 'After School', type: 'link', name: 'Lovers 4', desc: '(1) "Sounds tough."' },
+      { id: '9-10-2', month: 'Sep', date: '9/10', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '9-11-1', month: 'Sep', date: '9/11', time: 'After School', type: 'episode', name: 'Shinjiro Link Episode 3', desc: 'Spend time with Shinjiro.' },
+      { id: '9-11-2', month: 'Sep', date: '9/11', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '9-12-1', month: 'Sep', date: '9/12', time: 'After School', type: 'link', name: 'Priestess 8', desc: '(1) (Any) / (2) "I believe in myself."' },
+      { id: '9-12-2', month: 'Sep', date: '9/12', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '9-13-1', month: 'Sep', date: '9/13', time: 'Daytime', type: 'episode', name: 'Shinjiro Link Episode 4', desc: 'Mandatory daytime event with Shinjiro.' },
+      { id: '9-13-2', month: 'Sep', date: '9/13', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '9-14-1', month: 'Sep', date: '9/14', time: 'After School', type: 'episode', name: 'Shinjiro Link Episode 5 [MAX]', desc: 'Final Shinjiro Episode! (Unlocks Hell Biker fusion)' },
+      { id: '9-14-2', month: 'Sep', date: '9/14', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '9-15-1', month: 'Sep', date: '9/15', time: 'After School', type: 'episode', name: 'Koromaru Link Episode 3', desc: 'Spend afternoon with Koromaru.' },
+      { id: '9-15-2', month: 'Sep', date: '9/15', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '9-16-1', month: 'Sep', date: '9/16', time: 'After School', type: 'episode', name: 'Ken Link Episode 1', desc: 'Evening dorm hangout with Ken.' },
+      { id: '9-16-2', month: 'Sep', date: '9/16', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '9-17-1', month: 'Sep', date: '9/17', time: 'After School', type: 'link', name: 'Magician 9', desc: '(1) "Confront Emiri."' },
+      { id: '9-17-2', month: 'Sep', date: '9/17', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '9-18-1', month: 'Sep', date: '9/18–21', time: 'All Day', type: 'other', name: 'Storm Days', desc: 'Story weather sequences; no social links.' },
+      { id: '9-22-1', month: 'Sep', date: '9/22', time: 'Daytime', type: 'link', name: 'Hanged Man 9', desc: '(1) "That\'s the spirit."' },
+      { id: '9-22-2', month: 'Sep', date: '9/22', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '9-23-1', month: 'Sep', date: '9/23', time: 'Daytime', type: 'link', name: 'Hanged Man 10 [MAX]', desc: '(Any choices) — Maiko Maxed!' },
+      { id: '9-23-2', month: 'Sep', date: '9/23', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '9-24-1', month: 'Sep', date: '9/24', time: 'After School', type: 'link', name: 'Temperance 7', desc: '(1) "It\'s a great idea."' },
+      { id: '9-24-2', month: 'Sep', date: '9/24', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '9-25-1', month: 'Sep', date: '9/25', time: 'After School', type: 'link', name: 'Temperance 8', desc: '(1) "Don\'t go back."' },
+      { id: '9-25-2', month: 'Sep', date: '9/25', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '9-26-1', month: 'Sep', date: '9/26', time: 'After School', type: 'link', name: 'Priestess 9', desc: 'Romance: (1) "I love you, Fuuka." / Platonic: (1) "We\'ll always be friends."' },
+      { id: '9-26-2', month: 'Sep', date: '9/26', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '9-27-1', month: 'Sep', date: '9/27', time: 'Daytime', type: 'link', name: 'Sun 7', desc: '(1) "I\'m listening."' },
+      { id: '9-27-2', month: 'Sep', date: '9/27', time: 'Evening', type: 'tartarus', name: 'Tartarus (F119–144)', desc: 'Clear Tziah block 1 in 1 night.' },
+      { id: '9-28-1', month: 'Sep', date: '9/28', time: 'After School', type: 'link', name: 'Fortune 7', desc: '(1) "You should do what you want."' },
+      { id: '9-28-2', month: 'Sep', date: '9/28', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '9-29-1', month: 'Sep', date: '9/29', time: 'After School', type: 'link', name: 'Lovers 5', desc: '(1) "I have you."' },
+      { id: '9-29-2', month: 'Sep', date: '9/29', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '9-30-1', month: 'Sep', date: '9/30', time: 'After School', type: 'link', name: 'Priestess 10 [MAX]', desc: '(1) "I\'m always here for you." / (2) "I love them!" — Fuuka Maxed!' },
+      { id: '9-30-2', month: 'Sep', date: '9/30', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+
+      // OCTOBER
+      { id: '10-01-1', month: 'Oct', date: '10/1', time: 'After School', type: 'link', name: 'Fortune 8', desc: '(1) "Don\'t give in."' },
+      { id: '10-01-2', month: 'Oct', date: '10/1', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '10-02-1', month: 'Oct', date: '10/2', time: 'After School', type: 'link', name: 'Temperance 9', desc: '(1) "Stay here."' },
+      { id: '10-02-2', month: 'Oct', date: '10/2', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '10-03-1', month: 'Oct', date: '10/3', time: 'After School', type: 'link', name: 'Strength 7', desc: '(1) "You can do it."' },
+      { id: '10-03-2', month: 'Oct', date: '10/3', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '10-04-1', month: 'Oct', date: '10/4', time: 'Full Moon', type: 'other', name: 'Fortune & Strength Boss', desc: 'Story battle operation (Shinjiro climax).' },
+      { id: '10-05-1', month: 'Oct', date: '10/5', time: 'After School', type: 'link', name: 'Lovers 6', desc: '(1) "I\'m here for you."' },
+      { id: '10-05-2', month: 'Oct', date: '10/5', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '10-06-1', month: 'Oct', date: '10/6', time: 'After School', type: 'link', name: 'Fortune 9', desc: '(1) "Be true to yourself."' },
+      { id: '10-06-2', month: 'Oct', date: '10/6', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '10-07-1', month: 'Oct', date: '10/7', time: 'After School', type: 'link', name: 'Emperor 7', desc: '(1) "You\'re doing the right thing."' },
+      { id: '10-07-2', month: 'Oct', date: '10/7', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '10-08-1', month: 'Oct', date: '10/8', time: 'After School', type: 'link', name: 'Temperance 10 [MAX]', desc: '(1) "Great work!" — Bebe Maxed!' },
+      { id: '10-08-2', month: 'Oct', date: '10/8', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '10-09-1', month: 'Oct', date: '10/9', time: 'After School', type: 'episode', name: 'Akihiko Link Episode 3', desc: 'Afternoon event with Akihiko.' },
+      { id: '10-09-2', month: 'Oct', date: '10/9', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '10-10-1', month: 'Oct', date: '10/10', time: 'After School', type: 'link', name: 'Lovers 7', desc: '(1) (Any) / (2) "That\'s great."' },
+      { id: '10-10-2', month: 'Oct', date: '10/10', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '10-11-1', month: 'Oct', date: '10/11', time: 'Daytime', type: 'link', name: 'Sun 8', desc: '(1) "Stay strong."' },
+      { id: '10-11-2', month: 'Oct', date: '10/11', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '10-12-1', month: 'Oct', date: '10/12', time: 'Daytime', type: 'link', name: 'Star 4', desc: '(1) "I believe in you."' },
+      { id: '10-12-2', month: 'Oct', date: '10/12', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '10-13-1', month: 'Oct', date: '10/13–17', time: 'All Day', type: 'other', name: 'Second Midterms', desc: 'Answers: Minamoto | Zero | Morning glory | Madame Blavatsky.' },
+      { id: '10-18-1', month: 'Oct', date: '10/18', time: 'Daytime', type: 'link', name: 'Sun 9', desc: '(1) "I\'m with you."' },
+      { id: '10-18-2', month: 'Oct', date: '10/18', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '10-19-1', month: 'Oct', date: '10/19', time: 'After School', type: 'link', name: 'Exam Reward & Lovers 8', desc: 'Mitsuru exam reward -> Yukari: (1) "I\'m holding you."' },
+      { id: '10-19-2', month: 'Oct', date: '10/19', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '10-20-1', month: 'Oct', date: '10/20', time: 'After School', type: 'link', name: 'Lovers 9', desc: 'Romance: (1) "....." / (2) "I love you." | Platonic: (1) "....." / (2) "You\'re a precious friend."' },
+      { id: '10-20-2', month: 'Oct', date: '10/20', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '10-21-1', month: 'Oct', date: '10/21', time: 'After School', type: 'link', name: 'Magician 10 [MAX]', desc: '(1) (Any) / (2) "Cheer him on." — Kenji Maxed!' },
+      { id: '10-21-2', month: 'Oct', date: '10/21', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '10-22-1', month: 'Oct', date: '10/22', time: 'After School', type: 'link', name: 'Strength 8', desc: '(1) "I don\'t care."' },
+      { id: '10-22-2', month: 'Oct', date: '10/22', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '10-23-1', month: 'Oct', date: '10/23', time: 'After School', type: 'link', name: 'Fortune 10 [MAX]', desc: '(Any choices) — Keisuke Maxed!' },
+      { id: '10-23-2', month: 'Oct', date: '10/23', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '10-24-1', month: 'Oct', date: '10/24', time: 'After School', type: 'link', name: 'Strength 9', desc: 'Romance: (1) "An instructor?" / (2) "It\'s because I love you."' },
+      { id: '10-24-2', month: 'Oct', date: '10/24', time: 'Evening', type: 'tartarus', name: 'Tartarus (F145–172)', desc: 'Clear Tziah block 2 in 1 night.' },
+      { id: '10-25-1', month: 'Oct', date: '10/25', time: 'Daytime', type: 'link', name: 'Sun 10 [MAX]', desc: '(Any choices) — Akinari Maxed!' },
+      { id: '10-25-2', month: 'Oct', date: '10/25', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '10-26-1', month: 'Oct', date: '10/26', time: 'After School', type: 'link', name: 'Lovers 10 [MAX]', desc: '(Any choices) — Yukari Maxed!' },
+      { id: '10-26-2', month: 'Oct', date: '10/26', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '10-27-1', month: 'Oct', date: '10/27', time: 'After School', type: 'link', name: 'Emperor 8', desc: '(1) "Don\'t let them win."' },
+      { id: '10-27-2', month: 'Oct', date: '10/27', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '10-28-1', month: 'Oct', date: '10/28', time: 'After School', type: 'link', name: 'Emperor 9', desc: '(1) "I\'m with you."' },
+      { id: '10-28-2', month: 'Oct', date: '10/28', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '10-29-1', month: 'Oct', date: '10/29', time: 'After School', type: 'link', name: 'Strength 10 [MAX]', desc: '(Any choices) — Yuko Maxed!' },
+      { id: '10-29-2', month: 'Oct', date: '10/29', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '10-30-1', month: 'Oct', date: '10/30', time: 'After School', type: 'link', name: 'Emperor 10 [MAX]', desc: '(1) "You did your best." — Hidetoshi Maxed!' },
+      { id: '10-30-2', month: 'Oct', date: '10/30', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '10-31-1', month: 'Oct', date: '10/31', time: 'Daytime', type: 'link', name: 'Star 5', desc: '(1) "Keep going."' },
+      { id: '10-31-2', month: 'Oct', date: '10/31', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+
+      // NOVEMBER
+      { id: '11-03-1', month: 'Nov', date: '11/3', time: 'Full Moon', type: 'other', name: 'Hanged Man Boss', desc: 'Story battle operation.' },
+      { id: '11-07-1', month: 'Nov', date: '11/7', time: 'After School', type: 'episode', name: 'Junpei Link Ep 3 & Chidori Flag', desc: 'Hang out with Junpei. AT NIGHT: Buy White Flower from Station florist & give to Junpei!' },
+      { id: '11-07-2', month: 'Nov', date: '11/7', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Give Junpei White Flower in dorm lounge.' },
+      { id: '11-09-1', month: 'Nov', date: '11/9', time: 'After School', type: 'episode', name: 'Ryoji Link Episode 1', desc: 'Hang out with Ryoji. (Mandatory)' },
+      { id: '11-09-2', month: 'Nov', date: '11/9', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '11-10-1', month: 'Nov', date: '11/10', time: 'After School', type: 'episode', name: 'Ken Link Episode 2', desc: 'Hang out with Ken. (Note: Dating Site Notes unlock at Club Escapade tonight).' },
+      { id: '11-10-2', month: 'Nov', date: '11/10', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '11-12-1', month: 'Nov', date: '11/12', time: 'After School', type: 'episode', name: 'Ryoji Link Episode 2', desc: 'Spend afternoon with Ryoji.' },
+      { id: '11-12-2', month: 'Nov', date: '11/12', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '11-17-1', month: 'Nov', date: '11/17–20', time: 'All Day', type: 'other', name: 'Kyoto Trip', desc: 'School trip story events.' },
+      { id: '11-21-1', month: 'Nov', date: '11/21', time: 'After School', type: 'link', name: 'Empress 1 (Mitsuru)', desc: '1F Faculty Hallway (Academics 6 met in NG+). (Any choices)' },
+      { id: '11-21-2', month: 'Nov', date: '11/21', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '11-23-1', month: 'Nov', date: '11/23', time: 'Daytime', type: 'link', name: 'Star 6', desc: '(1) "You\'ll do fine."' },
+      { id: '11-23-2', month: 'Nov', date: '11/23', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '11-24-1', month: 'Nov', date: '11/24–27', time: 'All Day', type: 'other', name: 'Career Experience', desc: 'No afternoon social links permitted.' },
+      { id: '11-28-1', month: 'Nov', date: '11/28', time: 'After School', type: 'link', name: 'Empress 2', desc: '(1) (Any) / (2) "Why not give it a try?" / (3) "Are you happy?" / (4) "Maybe you\'re anxious." / (5) "I heard nothing."' },
+      { id: '11-28-2', month: 'Nov', date: '11/28', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '11-29-1', month: 'Nov', date: '11/29', time: 'Daytime', type: 'link', name: 'Star 7', desc: '(1) "It\'s no problem at all." / (2) "Don\'t give up yet."' },
+      { id: '11-29-2', month: 'Nov', date: '11/29', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '11-30-1', month: 'Nov', date: '11/30', time: 'After School', type: 'link', name: 'Empress 3', desc: '(1) (Any) / (2) "Did something happen?" / (3) "It\'s all for love."' },
+      { id: '11-30-2', month: 'Nov', date: '11/30', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+
+      // DECEMBER
+      { id: '12-01-1', month: 'Dec', date: '12/1', time: 'After School', type: 'episode', name: 'Ryoji Link Episode 3', desc: 'Spend afternoon with Ryoji.' },
+      { id: '12-01-2', month: 'Dec', date: '12/1', time: 'Evening', type: 'tartarus', name: 'Tartarus (F173–226)', desc: 'Clear Harabah blocks 1 & 2 in 1 night.' },
+      { id: '12-04-1', month: 'Dec', date: '12/4', time: 'After School', type: 'link', name: 'Empress 4', desc: '(1) (Any) / (2) "Did something happen?" / (3) "Glad you enjoyed it." / (4) "A motorcycle?" / (5) "Let\'s go for a ride."' },
+      { id: '12-04-2', month: 'Dec', date: '12/4', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '12-05-1', month: 'Dec', date: '12/5', time: 'After School', type: 'link', name: 'Empress 5', desc: '(1) (Any) / (2) "I\'ll do something about it."' },
+      { id: '12-05-2', month: 'Dec', date: '12/5', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '12-08-1', month: 'Dec', date: '12/8', time: 'After School', type: 'link', name: 'Empress 6', desc: '(1) "I don\'t mind at all." / (2) (Any)' },
+      { id: '12-08-2', month: 'Dec', date: '12/8', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '12-11-1', month: 'Dec', date: '12/11', time: 'After School', type: 'episode', name: 'Ryoji Link Episode 4', desc: 'Spend afternoon with Ryoji.' },
+      { id: '12-11-2', month: 'Dec', date: '12/11', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '12-14-1', month: 'Dec', date: '12/14–19', time: 'All Day', type: 'other', name: 'Final Exams', desc: 'Answers: The zero divisor | Done | ATS | Done | Done. Top in class!' },
+      { id: '12-19-1', month: 'Dec', date: '12/19', time: 'After School', type: 'episode', name: 'Junpei Link Episode 4', desc: 'Hang out with Junpei.' },
+      { id: '12-19-2', month: 'Dec', date: '12/19', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '12-21-1', month: 'Dec', date: '12/21', time: 'After School', type: 'link', name: 'Empress 7', desc: '(1) (Any) / (2) "Don\'t insult her father!" / (3) "Don\'t give in."' },
+      { id: '12-21-2', month: 'Dec', date: '12/21', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '12-22-1', month: 'Dec', date: '12/22', time: 'After School', type: 'episode', name: 'Ken Link Episode 3', desc: 'Afternoon hangout with Ken.' },
+      { id: '12-22-2', month: 'Dec', date: '12/22', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '12-24-1', month: 'Dec', date: '12/24', time: 'Evening', type: 'other', name: 'Christmas Eve', desc: 'Spend night with romance partner.' },
+      { id: '12-26-1', month: 'Dec', date: '12/26', time: 'Daytime', type: 'link', name: 'Star 8', desc: '(1) "Don\'t lose."' },
+      { id: '12-26-2', month: 'Dec', date: '12/26', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '12-29-1', month: 'Dec', date: '12/29', time: 'Daytime', type: 'link', name: 'Star 9', desc: '(1) "You can win."' },
+      { id: '12-29-2', month: 'Dec', date: '12/29', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '12-30-1', month: 'Dec', date: '12/30', time: 'Daytime', type: 'link', name: 'Star 10 [MAX]', desc: '(Any choices) — Mamoru Maxed!' },
+      { id: '12-30-2', month: 'Dec', date: '12/30', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '12-31-1', month: 'Dec', date: '12/31', time: 'Night', type: 'other', name: 'Crucial Story Choice', desc: 'Refuse to kill Ryoji (spare him) -> Unlocks True Route and entire month of January!' },
+
+      // JANUARY
+      { id: '1-04-1', month: 'Jan', date: '1/4', time: 'Evening', type: 'episode', name: 'Akihiko Link Ep 5 [MAX]', desc: 'Hand Wraps reward (Unlocks Horus fusion).' },
+      { id: '1-05-1', month: 'Jan', date: '1/5', time: 'Daytime', type: 'episode', name: 'Koromaru Link Ep 5 [MAX]', desc: 'Koromaru\'s Collar reward (Unlocks Byakko fusion).' },
+      { id: '1-08-1', month: 'Jan', date: '1/8', time: 'After School', type: 'link', name: 'Aeon 1 (Aigis)', desc: 'Classroom 2-F. (Any choices)' },
+      { id: '1-08-2', month: 'Jan', date: '1/8', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '1-09-1', month: 'Jan', date: '1/9', time: 'After School', type: 'link', name: 'Aeon 2', desc: '(1) "I like it here."' },
+      { id: '1-09-2', month: 'Jan', date: '1/9', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '1-11-1', month: 'Jan', date: '1/11', time: 'Daytime', type: 'link', name: 'Moon 4', desc: '(1) "You\'re not fat."' },
+      { id: '1-11-2', month: 'Jan', date: '1/11', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '1-12-1', month: 'Jan', date: '1/12', time: 'After School', type: 'link', name: 'Empress 8', desc: '(1) "Vent all you want." / Romance: (2) "That\'s up to you."' },
+      { id: '1-12-2', month: 'Jan', date: '1/12', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '1-13-1', month: 'Jan', date: '1/13', time: 'Evening', type: 'other', name: 'Messiah Flag', desc: 'Club Escapade: Suspicious man -> Unlock Messiah fusion path.' },
+      { id: '1-14-1', month: 'Jan', date: '1/14', time: 'After School', type: 'link', name: 'Empress 9', desc: '(1) "It made me happy." / Romance: (2) "I love you too."' },
+      { id: '1-14-2', month: 'Jan', date: '1/14', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '1-15-1', month: 'Jan', date: '1/15', time: 'After School', type: 'episode', name: 'Junpei Link Ep 5 [MAX]', desc: 'Baseball Glove reward (Unlocks Surt fusion).' },
+      { id: '1-15-2', month: 'Jan', date: '1/15', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '1-16-1', month: 'Jan', date: '1/16', time: 'After School', type: 'link', name: 'Empress 10 [MAX]', desc: '(1) "That\'s a relief." / (2) "I\'ll give it a try." — Mitsuru Maxed!' },
+      { id: '1-16-2', month: 'Jan', date: '1/16', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '1-18-1', month: 'Jan', date: '1/18', time: 'After School', type: 'link', name: 'Aeon 3', desc: '(1) (Any) / (2) "That\'s not true."' },
+      { id: '1-18-2', month: 'Jan', date: '1/18', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '1-19-1', month: 'Jan', date: '1/19', time: 'Evening', type: 'episode', name: 'Ken Link Ep 5 [MAX]', desc: 'Silver Key reward (Unlocks Michael fusion).' },
+      { id: '1-20-1', month: 'Jan', date: '1/20', time: 'After School', type: 'link', name: 'Aeon 4', desc: '(1) (Any) / (2) "All right."' },
+      { id: '1-20-2', month: 'Jan', date: '1/20', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '1-21-1', month: 'Jan', date: '1/21', time: 'After School', type: 'other', name: 'Chidori Recovery Event', desc: 'Hospital sequence triggers automatically due to 11/7 flowers.' },
+      { id: '1-21-2', month: 'Jan', date: '1/21', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '1-22-1', month: 'Jan', date: '1/22', time: 'After School', type: 'link', name: 'Aeon 5', desc: '(1) "You might be right."' },
+      { id: '1-22-2', month: 'Jan', date: '1/22', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '1-23-1', month: 'Jan', date: '1/23', time: 'After School', type: 'link', name: 'Aeon 6', desc: 'Romance: (1) "He thought I was your boyfriend." / Platonic: (1) "No, you didn\'t."' },
+      { id: '1-23-2', month: 'Jan', date: '1/23', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '1-25-1', month: 'Jan', date: '1/25', time: 'After School', type: 'link', name: 'Aeon 7', desc: '(1) (Any) / (2) (Any)' },
+      { id: '1-25-2', month: 'Jan', date: '1/25', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '1-26-1', month: 'Jan', date: '1/26', time: 'After School', type: 'link', name: 'Aeon 8', desc: '(1) "I\'m doing it now." / Romance: (2) "It\'s love."' },
+      { id: '1-26-2', month: 'Jan', date: '1/26', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '1-27-1', month: 'Jan', date: '1/27', time: 'After School', type: 'link', name: 'Aeon 9', desc: '(1) "You\'re right." / Romance: (2) "I love you, too."' },
+      { id: '1-27-2', month: 'Jan', date: '1/27', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '1-28-1', month: 'Jan', date: '1/28', time: 'After School', type: 'link', name: 'Aeon 10 [MAX]', desc: '(1) (Any) / (2) "Gently hold her hand." — Aigis Maxed!' },
+      { id: '1-28-2', month: 'Jan', date: '1/28', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '1-29-1', month: 'Jan', date: '1/29', time: 'After School', type: 'link', name: 'Moon 5–9 Nozomi Push', desc: 'R5: "Cheer up." | R6: "Calm down." | R7: "That\'s great." | R8: "Right now?"' },
+      { id: '1-29-2', month: 'Jan', date: '1/29', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Free evening.' },
+      { id: '1-30-1', month: 'Jan', date: '1/30', time: 'After School', type: 'link', name: 'Moon 10 [MAX]', desc: 'R9: "Don\'t do it." -> Rank 10 Final! ALL 22 SOCIAL LINKS COMPLETE!' },
+      { id: '1-30-2', month: 'Jan', date: '1/30', time: 'Evening', type: 'other', name: 'Dorm', desc: 'Final preparation evening.' },
+      { id: '1-31-1', month: 'Jan', date: '1/31', time: 'Final Night', type: 'tartarus', name: 'Tartarus Summit & Elizabeth', desc: 'Ascend Adamah (Judgement 10), face Elizabeth in Monad Depths (Req #101), battle Nyx.' }
+    ];
+
+    // Local Storage state management
+    const STORAGE_KEY = 'P3R_NG_PLUS_TRACKER_V1';
+    let checkedItems = new Set();
+
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        checkedItems = new Set(JSON.parse(saved));
+      }
+    } catch(e) {
+      console.warn('Local storage inaccessible:', e);
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(Array.from(checkedItems)));
+      } catch(e) {}
+      updateProgress();
+    }
+
+    // State Filters
+    let currentMonth = 'ALL';
+    let currentFilter = 'all';
+    let searchQuery = '';
+
+    const tableBody = document.getElementById('scheduleTableBody');
+    const emptyState = document.getElementById('emptyState');
+    const searchInput = document.getElementById('searchInput');
+
+    function getBadgeClass(type) {
+      switch(type) {
+        case 'link':
+          return 'bg-blue-900/60 text-cyan-300 border-blue-600/40';
+        case 'episode':
+          return 'bg-amber-950/70 text-amber-300 border-amber-600/50';
+        case 'tartarus':
+          return 'bg-emerald-950/70 text-emerald-300 border-emerald-500/50';
+        default:
+          return 'bg-slate-800 text-slate-300 border-slate-700';
+      }
+    }
+
+    function renderTable() {
+      tableBody.innerHTML = '';
+      
+      const filtered = SCHEDULE_DATA.filter(item => {
+        // Month filter
+        if (currentMonth !== 'ALL' && item.month !== currentMonth) return false;
+
+        // Type / Checked filter
+        const isChecked = checkedItems.has(item.id);
+        if (currentFilter === 'pending' && isChecked) return false;
+        if (currentFilter === 'link' && item.type !== 'link') return false;
+        if (currentFilter === 'episode' && item.type !== 'episode') return false;
+        if (currentFilter === 'tartarus' && item.type !== 'tartarus') return false;
+
+        // Text search
+        if (searchQuery.trim() !== '') {
+          const q = searchQuery.toLowerCase();
+          const matchDate = item.date.toLowerCase().includes(q);
+          const matchName = item.name.toLowerCase().includes(q);
+          const matchDesc = item.desc.toLowerCase().includes(q);
+          const matchTime = item.time.toLowerCase().includes(q);
+          if (!matchDate && !matchName && !matchDesc && !matchTime) return false;
+        }
+
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        emptyState.classList.remove('hidden');
+      } else {
+        emptyState.classList.add('hidden');
+      }
+
+      filtered.forEach(item => {
+        const isDone = checkedItems.has(item.id);
+        const tr = document.createElement('tr');
+        tr.className = `transition-colors duration-150 hover:bg-blue-950/30 ${isDone ? 'opacity-40 line-through bg-slate-900/30' : ''}`;
+        
+        // Highlight max ranks or key episode
+        const isMax = item.name.includes('[MAX]');
+        const isImportant = item.name.includes('Shinjiro') || item.name.includes('11/7') || item.name.includes('Elizabeth');
+
+        tr.innerHTML = `
+          <td class="py-3 px-3 sm:px-4 text-center">
+            <input type="checkbox" data-id="${item.id}" ${isDone ? 'checked' : ''} 
+                   class="item-checkbox w-4 h-4 rounded text-blue-600 bg-slate-900 border-slate-700 focus:ring-0 cursor-pointer">
+          </td>
+          <td class="py-3 px-3 sm:px-4 font-mono font-semibold text-white whitespace-nowrap">
+            ${item.date}
+          </td>
+          <td class="py-3 px-3 sm:px-4 text-slate-400 whitespace-nowrap text-xs">
+            ${item.time}
+          </td>
+          <td class="py-3 px-3 sm:px-4 font-medium text-slate-100">
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="inline-flex px-1.5 py-0.5 rounded text-[10px] font-semibold border ${getBadgeClass(item.type)}">
+                ${item.type.toUpperCase()}
+              </span>
+              <span class="${isMax ? 'text-amber-300 font-bold' : ''} ${isImportant ? 'text-cyan-300 font-semibold' : ''}">
+                ${item.name}
+              </span>
+            </div>
+          </td>
+          <td class="py-3 px-3 sm:px-4 text-slate-300 text-xs sm:text-sm font-mono leading-relaxed">
+            <div class="flex items-start justify-between gap-2">
+              <span class="${isDone ? '' : 'text-cyan-100/90'}">${item.desc}</span>
+              <button data-show-id="${item.id}" class="info-btn p-1 text-slate-400 hover:text-cyan-300 rounded hover:bg-blue-900/40 flex-shrink-0" title="Expand Details">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+              </button>
+            </div>
+          </td>
+        `;
+        tableBody.appendChild(tr);
+      });
+
+      updateProgress();
+    }
+
+    function updateProgress() {
+      const total = SCHEDULE_DATA.length;
+      const done = checkedItems.size;
+      const pct = Math.round((done / total) * 100);
+
+      document.getElementById('progressText').textContent = `${done} / ${total} (${pct}%)`;
+      document.getElementById('progressBar').style.width = `${pct}%`;
+    }
+
+    // Table interactions (Checkbox toggling & Modal preview)
+    tableBody.addEventListener('change', (e) => {
+      if (e.target.classList.contains('item-checkbox')) {
+        const id = e.target.getAttribute('data-id');
+        if (e.target.checked) {
+          checkedItems.add(id);
+        } else {
+          checkedItems.delete(id);
+        }
+        saveState();
+        renderTable();
+      }
+    });
+
+    tableBody.addEventListener('click', (e) => {
+      const btn = e.target.closest('.info-btn');
+      if (btn) {
+        const id = btn.getAttribute('data-show-id');
+        const item = SCHEDULE_DATA.find(x => x.id === id);
+        if (item) {
+          openModal(item);
+        }
+      }
+    });
+
+    // Month Selector Buttons
+    document.querySelectorAll('.month-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.month-btn').forEach(b => {
+          b.classList.remove('active', 'bg-blue-600', 'text-white');
+          b.classList.add('bg-slate-800', 'text-slate-300');
+        });
+        btn.classList.add('active', 'bg-blue-600', 'text-white');
+        btn.classList.remove('bg-slate-800', 'text-slate-300');
+        
+        currentMonth = btn.getAttribute('data-month');
+        renderTable();
+      });
+    });
+
+    // Category / Status Filter Pills
+    document.querySelectorAll('.filter-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        document.querySelectorAll('.filter-pill').forEach(p => {
+          p.classList.remove('active', 'bg-blue-700', 'text-white');
+          p.classList.add('bg-slate-800', 'text-slate-300');
+        });
+        pill.classList.add('active', 'bg-blue-700', 'text-white');
+        pill.classList.remove('bg-slate-800', 'text-slate-300');
+
+        currentFilter = pill.getAttribute('data-filter');
+        renderTable();
+      });
+    });
+
+    // Search Input
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value;
+      renderTable();
+    });
+
+    // Clear filters helper
+    document.getElementById('clearFiltersBtn').addEventListener('click', () => {
+      searchInput.value = '';
+      searchQuery = '';
+      currentMonth = 'ALL';
+      currentFilter = 'all';
+      
+      document.querySelectorAll('.month-btn').forEach(b => b.classList.remove('active', 'bg-blue-600', 'text-white'));
+      document.querySelector('[data-month="ALL"]').classList.add('active', 'bg-blue-600', 'text-white');
+      
+      document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active', 'bg-blue-700', 'text-white'));
+      document.querySelector('[data-filter="all"]').classList.add('active', 'bg-blue-700', 'text-white');
+
+      renderTable();
+    });
+
+    // Reset All Button
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      if (confirm) {
+        // Safe inline reset confirmation using a custom clean prompt check
+        const shouldReset = window.prompt('Type "RESET" to wipe all checked items back to 0%:');
+        if (shouldReset === 'RESET') {
+          checkedItems.clear();
+          saveState();
+          renderTable();
+        }
+      }
+    });
+
+    // Modal Helpers
+    const modal = document.getElementById('detailsModal');
+    const modalDate = document.getElementById('modalDate');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalBody = document.getElementById('modalBody');
+
+    function openModal(item) {
+      modalDate.textContent = `${item.date} • ${item.time}`;
+      modalTitle.textContent = item.name;
+      modalBody.innerHTML = `
+        <div class="space-y-3 font-sans">
+          <div>
+            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block">Target Event</span>
+            <p class="text-white font-medium">${item.name}</p>
+          </div>
+          <div>
+            <span class="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">Dialogue Choices & Instructions</span>
+            <p class="text-slate-200 mt-1 font-mono text-sm leading-relaxed">${item.desc}</p>
+          </div>
+          <div class="pt-2 border-t border-slate-800 text-xs text-slate-400">
+            Reminder: Keep a Persona of this Arcana equipped in your stock for maximum +3 affinity points.
+          </div>
+        </div>
+      `;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeModal() {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    document.getElementById('closeModalBtn').addEventListener('click', closeModal);
+    document.getElementById('modalOkBtn').addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    // Initialize display on window load
+    window.addEventListener('DOMContentLoaded', () => {
+      renderTable();
+    });
+  </script>
+</body>
+</html>
